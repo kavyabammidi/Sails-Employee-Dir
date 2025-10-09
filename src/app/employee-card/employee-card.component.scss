@@ -1,0 +1,47 @@
+.employee-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .object-fit-cover {
+    object-fit: cover;
+  }
+
+  &.border-warning {
+    border: 2px solid #ff9800 !important;
+  }
+
+  &.bg-warning-subtle {
+    background-color: #fff8e1 !important;
+  }
+
+  .card-footer button {
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+
+    &.fav-btn {
+      background-color: #ff9800;
+      color: #fff;
+
+      &:hover {
+        background-color: #00e668;
+      }
+    }
+
+    &.details-btn {
+      background-color: #2196f3;
+      color: #fff;
+
+      &:hover {
+        background-color: #1976d2;
+      }
+    }
+  }
+}

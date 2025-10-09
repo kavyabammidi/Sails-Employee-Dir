@@ -1,0 +1,22 @@
+.favourite-list {
+  .card img {
+    width: 110px;
+    height: 110px;
+    object-fit: cover;
+    border: 3px solid #4a90e2;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    transition: all 0.3s ease-in-out;
+  }
+
+  .btn-primary {
+    background-color: #4a90e2;
+    border: none;
+
+    &:hover {
+      background-color: #357ab8;
+    }
+  }
+}

@@ -1,0 +1,35 @@
+<!-- favourite-list.component.html -->
+<div class="favourite-list container py-5 text-center bg-light">
+  <h2 class="fw-semibold text-dark mb-4 text-capitalize">
+    ⭐ Favourite Employees
+  </h2>
+
+  <div class="row g-4 justify-content-center">
+    <div
+      class="col-12 col-sm-6 col-md-4 col-lg-3"
+      *ngFor="let emp of favourites"
+    >
+      <div class="card shadow-sm border-0 rounded-4 text-center p-3">
+        <app-employee-card
+          [employee]="emp"
+          [isFavourite]="true"
+          (toggleFavourite)="toggleFavourite(emp.id)"
+        ></app-employee-card>
+
+        <button
+          class="btn btn-primary mt-3 px-4 rounded-pill"
+          [routerLink]="'/employee/' + emp.id"
+        >
+          View Details
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <p
+    *ngIf="favourites.length === 0"
+    class="text-danger fs-4 mt-5 fw-medium"
+  >
+    No favourites yet 👎 !
+  </p>
+</div>

@@ -1,0 +1,21 @@
+<!-- employee-card.component.html -->
+<div
+  class="employee-card card text-center shadow-sm  p-6 mb-3 rounded-4"
+  [class.border-warning]="isFavourite"
+  [class.bg-warning-subtle]="isFavourite"
+>
+  <img
+    [src]="employee.profilePhotoUrl"
+    [alt]="employee.name"
+    class="rounded-circle object-fit-cover border border-3 border-light mx-auto mb-3"
+    width="80"
+    height="80"
+  />
+
+  <h3 class="h5 fw-semibold text-dark mb-2">{{ employee.name }}</h3>
+
+  <!-- Button container -->
+  <div class="card-footer bg-transparent   justify-content-center gap-2">
+    <ng-content></ng-content>
+  </div>
+</div>
