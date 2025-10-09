@@ -1,23 +1,17 @@
-import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, Router } from '@angular/router';
+import { inject } from '@angular/core';
+import { CanActivateFn, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { EmployeeService } from '../services/employee.service';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class EmployeeExistsGuard implements CanActivate {
+export const employeeExistsGuard: CanActivateFn = (route: ActivatedRouteSnapshot) => {
+  const employeeService = inject(EmployeeService);
+  const router = inject(Router);
 
-  constructor(private employeeService: EmployeeService, private router: Router) {}
-
-  canActivate(route: ActivatedRouteSnapshot): boolean {
-    const id = Number(route.paramMap.get('id'));
-    const employee = this.employeeService.getEmployeeById(id);
-
-    if (employee) {
-      return true;
-    } else {
-      this.router.navigate(['/error']);
-      return false;
-    }
+  const id = Number(route.paramMap.get('id'));
+  const emp = employeeService.getEmployeeById(id);
+  if (emp) {
+    return true;
+  } else {
+    router.navigate(['/error']);
+    return false;
   }
-}
+};

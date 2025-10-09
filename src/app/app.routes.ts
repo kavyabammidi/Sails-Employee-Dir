@@ -5,7 +5,7 @@ import { Routes } from '@angular/router';
 import { EmployeeListComponent } from './employee-list/employee-list.component';
 import { EmployeeDetailsComponent } from './employee-details/employee-details.component';
 import { ErrorComponent } from './error/error.component';
-import { EmployeeExistsGuard } from './guards/employee-exists.guard';
+import { employeeExistsGuard } from './guards/employee-exists.guard';
 import { FavouriteListComponent } from './favourite-list/favourite-list.component';
 
 
@@ -14,7 +14,7 @@ import { FavouriteListComponent } from './favourite-list/favourite-list.componen
 export const routes: Routes = [
   {path:'',redirectTo:'employees',pathMatch:'full'},
   { path: 'employees', component: EmployeeListComponent },
-  { path: 'employee/:id', component: EmployeeDetailsComponent, canActivate: [EmployeeExistsGuard] },
+  { path: 'employee/:id', component: EmployeeDetailsComponent, canActivate: [employeeExistsGuard] },
   { path: 'favourites', component: FavouriteListComponent },
 
   { path: '**', component: ErrorComponent }
