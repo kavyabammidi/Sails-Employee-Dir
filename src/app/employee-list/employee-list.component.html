@@ -15,6 +15,13 @@
       >
         <!-- Buttons (ng-content projected) -->
         <div class=" d-flex justify-content-center text-nowrap gap-1 p-0">
+          
+          <button
+             class="details-btn   btn-sm rounded "
+            (click)="viewDetails(emp.id)"
+          >
+            View Details
+          </button>
           <button
             class="fav-btn btn-sm rounded me-1"
             (click)="handleToggleFav(emp.id)"
@@ -24,12 +31,6 @@
                 ? 'Unmark Favourite'
                 : 'Mark Favourite'
             }}
-          </button>
-          <button
-             class="details-btn   btn-sm rounded "
-            (click)="viewDetails(emp.id)"
-          >
-            View Details
           </button>
         </div>
       </app-employee-card>

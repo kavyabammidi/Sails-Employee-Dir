@@ -1,0 +1,67 @@
+<div class="d-flex justify-content-center align-items-center vh-100 ">
+  <div class="card shadow-lg p-5 rounded-4 text-center" style="max-width: 450px; width: 100%;">
+    
+    <!-- Logo -->
+    <div class="mb-4">
+      <i class="bi bi-person-circle display-1 text-primary"></i>
+    </div>
+
+    <h3 class="card-title mb-4 fw-bold">Welcome Back</h3>
+
+    <form #loginForm="ngForm" (ngSubmit)="onLogin(loginForm)">
+      
+      <!-- Username -->
+      <div class="mb-3 position-relative">
+        <label for="username" class="form-label fw-semibold text-start w-100">Username</label>
+        <div class="d-flex align-items-center">
+          <i class="bi bi-person-heart text-primary fs-4 me-3"></i>
+          <input
+            type="text"
+            class="form-control"
+            id="username"
+            placeholder="Enter username"
+            name="username"
+            ngModel
+            required
+          />
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="mb-4 position-relative">
+        <label for="password" class="form-label fw-semibold text-start w-100">Password</label>
+        <div class="d-flex align-items-center">
+          <i class="bi bi-shield-lock-fill text-primary fs-4 me-3"></i>
+          <div class="position-relative flex-grow-1">
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              class="form-control pe-5"
+              id="password"
+              placeholder="Enter password"
+              name="password"
+              ngModel
+              required
+            />
+            <i
+              (click)="togglePasswordVisibility()"
+              [class]="showPassword ? 'bi bi-eye-slash-fill text-secondary' : 'bi bi-eye-fill text-primary'"
+              class="fs-5 position-absolute end-0 top-50 translate-middle-y me-3"
+              style="cursor: pointer;"
+            ></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <button
+        type="submit"
+        class="btn btn-primary w-100 fw-bold d-flex align-items-center justify-content-center gap-2"
+        [disabled]="loginForm.invalid"
+      >
+        <i class="bi bi-box-arrow-in-right"></i> Login
+      </button>
+    </form>
+
+    <p class="mt-4 text-muted small mb-0">© 2025 Employee Directory</p>
+  </div>
+</div>
