@@ -1,38 +1,31 @@
-<!-- employee-list.component.html -->
-<div class="employee-list container ">
-  
-    
-
+<div class="employee-list container">
   <div class="row g-4 justify-content-center">
     <div
-      class="col-12 col-sm-6 col-md-6 col-lg-4"
-      *ngFor="let emp of employees"
+      class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3"
+      *ngFor="let emp of filteredEmployees$ | async"
     >
       <app-employee-card
         [employee]="emp"
         [isFavourite]="employeeService.isFavourite(emp.id)"
-        (toggleFav)="handleToggleFav($event)"
+        (toggleFav)="handleToggleFav(emp.id)"
       >
         <!-- Buttons (ng-content projected) -->
-        <div class=" d-flex justify-content-center text-nowrap gap-1 p-0">
-          
-          <button
-             class="details-btn   btn-sm rounded "
-            (click)="viewDetails(emp.id)"
-          >
-            View Details
-          </button>
-          <button
-            class="fav-btn btn-sm rounded me-1"
-            (click)="handleToggleFav(emp.id)"
-          >
-            {{
-              employeeService.isFavourite(emp.id)
-                ? 'Unmark Favourite'
-                : 'Mark Favourite'
-            }}
-          </button>
-        </div>
+        <div class="d-flex flex-wrap justify-content-center text-nowrap gap-1 p-0">
+  <button
+    class="btn btn-sm rounded details-btn"
+    (click)="viewDetails(emp.id)"
+  >
+    View Details
+  </button>
+
+  <button
+    class="btn btn-sm rounded fav-btn"
+    (click)="handleToggleFav(emp.id)"
+  >
+    {{ getFavouriteLabel(emp.id) }}
+  </button>
+</div>
+
       </app-employee-card>
     </div>
   </div>

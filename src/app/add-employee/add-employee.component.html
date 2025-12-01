@@ -1,0 +1,247 @@
+<!-- Add Employee Modal -->
+<div
+  class="modal fade"
+  id="addEmployeeModal"
+  tabindex="-1"
+  aria-labelledby="addEmployeeModalLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content rounded-4 shadow-lg">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="addEmployeeModalLabel">
+          <i class="bi bi-person-plus-fill me-2"></i>Add New Employee
+        </h5>
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          (click)="onCancel()"
+        ></button>
+      </div>
+
+      <div class="modal-body p-4">
+        <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+          <!-- Basic Information -->
+          <h6 class="text-primary mb-3">
+            <i class="bi bi-info-circle me-2"></i>Basic Information
+          </h6>
+          <div class="row g-3 mb-4">
+            <div class="col-md-2">
+              <label class="form-label fw-semibold">ID</label>
+              <input 
+                type="text" 
+                class="form-control bg-light" 
+                formControlName="id" 
+                readonly 
+              />
+            </div>
+
+            <div class="col-md-5">
+              <label class="form-label fw-semibold">
+                First Name <span class="text-danger">*</span>
+              </label>
+              <input 
+                type="text" 
+                class="form-control" 
+                formControlName="firstName"
+                [class.is-invalid]="employeeForm.get('firstName')?.invalid && employeeForm.get('firstName')?.touched"
+              />
+              <div class="invalid-feedback">First name is required</div>
+            </div>
+
+            <div class="col-md-5">
+              <label class="form-label fw-semibold">
+                Last Name <span class="text-danger">*</span>
+              </label>
+              <input 
+                type="text" 
+                class="form-control" 
+                formControlName="lastName"
+                [class.is-invalid]="employeeForm.get('lastName')?.invalid && employeeForm.get('lastName')?.touched"
+              />
+              <div class="invalid-feedback">Last name is required</div>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label fw-semibold">
+                Age <span class="text-danger">*</span>
+              </label>
+              <input 
+                type="number" 
+                class="form-control" 
+                formControlName="age"
+                [class.is-invalid]="employeeForm.get('age')?.invalid && employeeForm.get('age')?.touched"
+              />
+              <div class="invalid-feedback">Valid age required</div>
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label fw-semibold">
+                Email <span class="text-danger">*</span>
+              </label>
+              <input 
+                type="email" 
+                class="form-control" 
+                formControlName="email"
+                [class.is-invalid]="employeeForm.get('email')?.invalid && employeeForm.get('email')?.touched"
+              />
+              <div class="invalid-feedback">Valid email required</div>
+            </div>
+
+            <div class="col-md-5">
+              <label class="form-label fw-semibold">
+                Department <span class="text-danger">*</span>
+              </label>
+              <select 
+                class="form-select" 
+                formControlName="department"
+                [class.is-invalid]="employeeForm.get('department')?.invalid && employeeForm.get('department')?.touched"
+              >
+                <option value="">Select Department</option>
+                <option *ngFor="let dept of departments" [value]="dept">{{ dept }}</option>
+              </select>
+              <div class="invalid-feedback">Department is required</div>
+            </div>
+          </div>
+
+          <!-- Job Information -->
+          <h6 class="text-primary mb-3">
+            <i class="bi bi-briefcase me-2"></i>Job Information
+          </h6>
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">
+                Designation <span class="text-danger">*</span>
+              </label>
+              <input 
+                type="text" 
+                class="form-control placeholder-glow" 
+                formControlName="title"
+                placeholder="e.g., Software Engineer"
+                [class.is-invalid]="employeeForm.get('title')?.invalid && employeeForm.get('title')?.touched"
+              />
+              <div class="invalid-feedback">Designation is required</div>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Profile Photo URL</label>
+              <input 
+                type="text" 
+                class="form-control" 
+                formControlName="profilePhotoUrl"
+                placeholder="https://..."
+              />
+              <small class="text-muted">Optional</small>
+            </div>
+          </div>
+
+          <!-- Address Information -->
+          <h6 class="text-primary mb-3">
+            <i class="bi bi-geo-alt me-2"></i>Address
+          </h6>
+          <div formGroupName="address" class="row g-3 mb-4">
+            <div class="col-md-4">
+              <label class="form-label fw-semibold">
+                City <span class="text-danger">*</span>
+              </label>
+              <input 
+                type="text" 
+                class="form-control" 
+                formControlName="city"
+                [class.is-invalid]="employeeForm.get('address.city')?.invalid && employeeForm.get('address.city')?.touched"
+              />
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label fw-semibold">
+                State <span class="text-danger">*</span>
+              </label>
+              <input 
+                type="text" 
+                class="form-control" 
+                formControlName="state"
+                [class.is-invalid]="employeeForm.get('address.state')?.invalid && employeeForm.get('address.state')?.touched"
+              />
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label fw-semibold">
+                State Code <span class="text-danger">*</span>
+              </label>
+              <input 
+                type="text" 
+                class="form-control" 
+                formControlName="stateCode"
+                [class.is-invalid]="employeeForm.get('address.stateCode')?.invalid && employeeForm.get('address.stateCode')?.touched"
+              />
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">
+                Postal Code <span class="text-danger">*</span>
+              </label>
+              <input 
+                type="text" 
+                class="form-control" 
+                formControlName="postalCode"
+                [class.is-invalid]="employeeForm.get('address.postalCode')?.invalid && employeeForm.get('address.postalCode')?.touched"
+              />
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">
+                Country <span class="text-danger">*</span>
+              </label>
+              <input 
+                type="text" 
+                class="form-control" 
+                formControlName="country"
+                [class.is-invalid]="employeeForm.get('address.country')?.invalid && employeeForm.get('address.country')?.touched"
+              />
+            </div>
+          </div>
+
+          <!-- Contact Information -->
+          <h6 class="text-primary mb-3">
+            <i class="bi bi-telephone me-2"></i>Contact
+          </h6>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Phone Number</label>
+              <input 
+                type="text" 
+                class="form-control" 
+                formControlName="phone"
+                placeholder="10-digit number"
+                [class.is-invalid]="employeeForm.get('phone')?.invalid && employeeForm.get('phone')?.touched"
+              />
+              <div class="invalid-feedback">Enter valid 10-digit phone</div>
+              <small class="text-muted">Optional</small>
+            </div>
+            
+          </div>
+
+          <!-- Footer Buttons -->
+          <div class="mt-4 pt-3 border-top d-flex justify-content-end gap-2">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              (click)="onCancel()"
+            >
+              <i class="bi bi-x-circle me-1"></i>Cancel
+            </button>
+            <button 
+              type="submit" 
+              class="btn btn-primary"
+              [disabled]="employeeForm.invalid"
+            >
+              <i class="bi bi-check-circle me-1"></i>Add Employee
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

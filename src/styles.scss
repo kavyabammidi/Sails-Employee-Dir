@@ -3,3 +3,45 @@ body {
   margin: 0;
    /* same as header height */
 }
+/* Default light theme */
+body.light-theme {
+  --bg-color: #f8f9fa;
+  --text-color: #212529;
+  --card-bg: #fff;
+  --card-border: #ddd;
+  --btn-bg: #fff;
+  --btn-text: #212529;
+}
+
+/* Dark theme */
+body.dark-theme {
+  --bg-color: #121212;
+  --text-color: #f1f1f1;
+  --card-bg: #1e1e1e;
+  --card-border: #333;
+  --btn-bg: #333;
+  --btn-text: #f1f1f1;
+}
+
+/* Apply variables globally */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: all 0.3s ease;
+}
+
+.card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--text-color);
+}
+
+button, select, input {
+  background-color: var(--btn-bg);
+  color: var(--btn-text);
+  border: 1px solid var(--card-border);
+}
+body.dark-theme .text-muted {
+  color: #bbb !important;
+}
+

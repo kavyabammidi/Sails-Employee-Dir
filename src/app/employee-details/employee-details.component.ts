@@ -4,17 +4,17 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { EmployeeService } from '../services/employee.service';
 import { Employee } from '../models/employee';
 import { AgePipe } from '../pipes/age.pipe';
-import { JoinDatePipe } from '../pipes/join-date.pipe'; // if you created this
+import { JoinDatePipe } from '../pipes/join-date.pipe';
 
 @Component({
   selector: 'app-employee-details',
-  templateUrl: './employee-details.component.html',
-  styleUrls: ['./employee-details.component.scss'],
   standalone: true,
-  imports: [CommonModule, AgePipe, JoinDatePipe]
+  imports: [CommonModule, JoinDatePipe],
+  templateUrl: './employee-details.component.html',
+  styleUrls: ['./employee-details.component.scss']
 })
 export class EmployeeDetailsComponent implements OnInit {
-  employee!: Employee; // ✅ use non-null assertion because you fetch it in ngOnInit
+  employee!: Employee; // will be assigned after fetching from API
 
   constructor(
     private route: ActivatedRoute,
@@ -24,12 +24,15 @@ export class EmployeeDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    const emp = this.employeeService.getEmployeeById(id);
-    if (emp) {
-      this.employee = emp; // now employee is always defined
-    } else {
-      this.router.navigate(['/error']);
-    }
+
+    // Subscribe to the Observable returned by the service
+    this.employeeService.getEmployeeById(id).subscribe(emp => {
+      if (emp) {
+        this.employee = emp;
+      } else {
+        this.router.navigate(['/error']); // fallback if id invalid
+      }
+    });
   }
 
   goBack() {

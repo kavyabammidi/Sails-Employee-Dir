@@ -1,24 +1,25 @@
-<!-- favourite-list.component.html -->
-<div class="favourite-list container py-5 text-center bg-light">
-  <h2 class="fw-semibold text-dark mb-4 text-capitalize">
-    ⭐ Favourite Employees
-  </h2>
+<div class="favourite-list container py-5 text-center" [ngClass]="theme">
+  <h2 class="fw-semibold mb-4 text-capitalize d-flex  ms-auto justify-content-center">
+  <i class="bi bi-heart-fill text-danger me-2"></i> Favourite Employees
+</h2>
+
 
   <div class="row g-4 justify-content-center">
     <div
       class="col-12 col-sm-6 col-md-4 col-lg-3"
-      *ngFor="let emp of favourites"
+      *ngFor="let emp of filteredFavourites"
     >
       <div class="card shadow-sm border-0 rounded-4 text-center p-3">
         <app-employee-card
           [employee]="emp"
-          [isFavourite]="true"
-          (toggleFavourite)="toggleFavourite(emp.id)"
+          [isFavourite]="employeeService.isFavourite(emp.id)"
+          
+          (toggleFav)="toggleFavourite(emp.id)"
         ></app-employee-card>
 
         <button
           class="btn btn-primary mt-3 px-4 rounded-pill"
-          [routerLink]="'/employee/' + emp.id"
+          (click)="viewDetails(emp.id)"
         >
           View Details
         </button>
@@ -26,10 +27,19 @@
     </div>
   </div>
 
-  <p
-    *ngIf="favourites.length === 0"
-    class="text-danger fs-4 mt-5 fw-medium"
-  >
-    No favourites yet 👎 !
-  </p>
-</div>
+  <!-- Empty state -->
+ @if (filteredFavourites.length === 0) {
+  <div class="mt-5 text-center">
+    <p class="text-danger fs-4 fw-medium mb-3">
+      No favourites yet !
+    </p>
+    <a
+      routerLink="/employees"
+      class="btn bg-primary px-4 rounded-pill text-white fw-semibold d-inline-flex align-items-center mt-5"
+    >
+      <i class="bi bi-arrow-left-circle-fill me-2"></i> Back to List
+    </a>
+  </div>
+}
+
+

@@ -5,6 +5,15 @@ export interface Employee {
   department: string;
   dateOfJoining: Date;
   profilePhotoUrl: string;
-  email?: string; // optional
-  dateOfBirth?: Date; // optional
+  email: string;
+  phone: string;
+  age: number;
+  address: {
+    city: string;
+    state: string;
+    stateCode: string;
+    postalCode: string;
+    country: string;
+  };
+  dateOfBirth?: Date;
 }

@@ -1,26 +1,32 @@
-<div class="employee-details  card shadow border-0 rounded-4 mx-auto p-4 py-5 my-4">
+<div class="employee-details card shadow border-0 rounded-4 mx-auto p-4 py-5 my-4">
   <div class="row align-items-center">
     <div class="col-md-5 col text-center">
-      <img
-        [src]="employee.profilePhotoUrl"
-        [alt]="employee.name"
-        class="rounded-circle border border-3 border-primary img-fluid"
-        width="120"
-        height="120"
-      />
+      <img [src]="employee.profilePhotoUrl" [alt]="employee.name" class="rounded-circle border border-3 border-primary img-fluid" width="120" height="120" />
     </div>
-    <div class="col-md-7 col  text-start ">
+    <div class="col-md-7 col text-start">
       <h2 class="fw-semibold pt-2">Employee Details</h2>
-      <p class="mb-1"><strong>Name:</strong>{{ employee.name }}</p>
+      <p class="mb-1"><strong>Name:</strong> {{ employee.name }}</p>
       <p class="mb-1"><strong>Designation:</strong> {{ employee.designation }}</p>
       <p class="mb-1"><strong>Department:</strong> {{ employee.department }}</p>
+      <p class="mb-1"><strong>Age:</strong> {{ employee.age }}</p>
+      <p class="mb-1"><strong>Mobile:</strong> {{ employee.phone }}</p>
       <p class="mb-1"><strong>Date of Joining:</strong> {{ employee.dateOfJoining | joinDate }}</p>
-      <p *ngIf="employee.dateOfBirth" class="mb-1"><strong>Age:</strong> {{ employee.dateOfBirth | age }}</p>
-      <p *ngIf="employee.email" class="mb-3"><strong>Email:</strong> {{ employee.email }}</p>
       
+      <!-- Address fields -->
+      <p class="mb-1"><strong>City:</strong> {{ employee.address.city }}</p>
+      <p class="mb-1"><strong>State:</strong> {{ employee.address.state }}</p>
+      <p class="mb-1"><strong>Postal Code:</strong> {{ employee.address.postalCode }}</p>
+      <p class="mb-1"><strong>Country:</strong> {{ employee.address.country }}</p>
+
+      <p class="mb-3" *ngIf="employee.email"><strong>Email:</strong> {{ employee.email }}</p>
     </div>
   </div>
-  <button class="btn btn-primary mx-auto rounded-pill" (click)="goBack()">
-        ⬅ Back to List 
-      </button>
+  
 </div>
+<div class="text-center mt-3">
+  <button class="btn btn-primary rounded-pill px-4 d-flex align-items-center justify-content-center gap-2 mx-auto" (click)="goBack()">
+    <i class="bi bi-arrow-left-circle-fill fs-5"></i>
+    Back to List
+  </button>
+</div>
+

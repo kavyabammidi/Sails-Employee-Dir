@@ -7,3 +7,25 @@
   // optional: small padding if needed
   padding: 1rem;
 }
+
+.details-btn {
+  background-color: var(--bs-primary-bg-subtle);
+  color: var(--bs-primary);
+  border: none;
+}
+
+.details-btn:hover {
+  background-color: var(--bs-primary);
+  color: white;
+}
+
+.fav-btn {
+  background-color: var(--bs-success-bg-subtle);
+  color: var(--bs-success);
+  border: none;
+}
+
+.fav-btn:hover {
+  background-color: var(--bs-success);
+  color: white;
+}

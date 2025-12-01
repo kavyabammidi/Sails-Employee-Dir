@@ -1,12 +1,270 @@
+<!-- Top Header -->
+<header class="navbar navbar-expand-lg px-3 shadow-sm"
+  [ngClass]="currentTheme === 'dark' ? 'navbar-dark' : 'navbar-light'"
+  [style.background-color]="currentTheme === 'dark' ? '#212529' : '#cfe2ff'">
+  <a
+    class="navbar-brand fw-bolder fs-3 d-flex align-items-center gap-2"
+    routerLink="/employees"
+    [ngClass]="currentTheme === 'dark' ? 'text-white' : 'text-dark'"
+  >
+    
+    Employee Directory
+  </a>
 
-<header class="header">
-  <div class="title">
-    <a routerLink="/employees">Employee Directory📂</a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarContent">
+    <div class="d-flex align-items-center gap-3 flex-wrap justify-content-end">
+
+      <!-- Only show if logged in -->
+      <ng-container *ngIf="authService.isLoggedIn()">
+     <div class="position-relative d-inline-block">
+  <!-- Profile Image -->
+  <img
+    [src]="authService.getUserPhoto() || 'https://via.placeholder.com/32'"
+    alt="Profile"
+    class="rounded-circle border border-2"
+    style="width: 32px; height: 32px; object-fit: cover; cursor: pointer;"
+    data-bs-toggle="tooltip"
+    data-bs-placement="bottom"
+    [attr.title]="authService.getUsername()"
+    (click)="toggleProfileMenu($event)"
+  />
+
+  <!-- Profile Dropdown -->
+  <div
+  *ngIf="showProfileMenu"
+  class="position-absolute end-0 shadow-lg rounded-3 p-3 profile-menu"
+  [ngClass]="{
+    'bg-white text-dark': currentTheme === 'light',
+    'bg-dark text-light border border-secondary': currentTheme === 'dark'
+  }"
+  style="min-width: 260px; top: 120%; z-index: 1050;"
+>
+  <div class="d-flex flex-column align-items-center text-center p-3">
+    <img
+      [src]="authService.getUserPhoto()"
+      class="rounded-circle mb-2 border border-2"
+      width="60"
+      height="60"
+      alt="User Photo"
+    />
+
+    <div class="fw-bold">{{ authService.getUsername() }}</div>
+
+    <small
+      class="d-block mb-2 text-nowrap"
+      [ngClass]="{
+        'text-muted': currentTheme === 'light',
+        'text-secondary': currentTheme === 'dark'
+      }"
+      style="word-break: break-all; max-width: 220px;"
+    >
+      {{ authService.getEmail() }}
+    </small>
+
+    <hr class="w-100 my-2" />
+
+    <button
+      *ngIf="authService.isLoggedIn()"
+      class="btn w-100 d-flex align-items-center justify-content-center gap-2 py-2 rounded-3"
+      [ngClass]="{
+        'btn-light border-0': currentTheme === 'light',
+        'btn-outline-light': currentTheme === 'dark'
+      }"
+      (click)="logout()"
+    >
+      <i class="bi bi-box-arrow-right fs-5 text-danger"></i>
+      <span class="fw-semibold text-danger">Logout</span>
+    </button>
   </div>
-  
-
-  <a *ngIf="canShowFavouritesLink()" routerLink="/favourites">View Favourites⭐</a>
+</div>
 
 
+    
+  </div>
+
+
+
+
+
+
+       
+
+      </ng-container>
+      <!-- Theme switch with icon -->
+        <div class="form-check form-switch m-0 d-flex align-items-center">
+          <input 
+            class="form-check-input" 
+            type="checkbox" 
+            id="themeSwitch"
+            role="switch"
+            [checked]="currentTheme === 'dark'" 
+            (change)="toggleTheme()"
+            style="cursor: pointer; width: 3em; height: 1.5em;"
+          />
+          <label 
+            class="form-check-label ms-2" 
+            for="themeSwitch"
+            [ngClass]="currentTheme === 'dark' ? 'text-white' : 'text-dark'"
+            style="cursor: pointer;"
+          >
+            
+          </label>
+        </div>
+        
+
+         
+
+    </div>
+  </div>
 </header>
 
+<!-- Bottom Bar: Sort, Search, View Toggle, Add Employee, Favourites -->
+<ng-container *ngIf="authService.isLoggedIn() && showBottomBar">
+  <div class="d-flex justify-content-center mb-3 px-3" style="margin-top: 1.5rem;">
+    <div class="container">
+     
+
+      <!-- Desktop/Tablet Layout (md and up) -->
+      <div
+        class="d-none d-md-flex align-items-center justify-content-between py-2"
+        style="flex-wrap: nowrap; overflow-x: auto; white-space: nowrap; gap: 1rem;"
+      >
+        <!-- Left: Employee Count -->
+        <div class="me-3 flex-shrink-0 d-flex align-items-center">
+          <i class="bi bi-people-fill text-primary fs-5"></i>
+          <span class="fw-bolder fs-6 px-3 py-2">
+            {{ employeeCount }} Employee{{ employeeCount !== 1 ? 's' : '' }}
+          </span>
+        </div>
+
+        <!-- Right: All Controls in One Line -->
+        <div
+          class="d-flex align-items-center justify-content-end"
+          style="gap: 0.75rem; flex-wrap: nowrap;"
+        >
+          <!-- Search -->
+          <form class="d-flex mb-0 flex-shrink-0">
+            <div class="input-group input-group-sm rounded-pill overflow-hidden shadow-sm" style="width: 450px;">
+              <span class="input-group-text border-0 bg-white ps-3">
+                <i class="bi bi-search-heart text-primary"></i>
+              </span>
+              <input
+                type="search"
+                class="form-control form-control-sm border-0 bg-white"
+                placeholder="Search…"
+                [value]="searchText"
+                (input)="onSearchChange($event)"
+              />
+            </div>
+          </form>
+
+          <!-- Sort -->
+          <div class="position-relative" style="width: 160px;">
+            <i
+  class="bi bi-filter position-absolute top-50 start-0 translate-middle-y ms-1 text-primary opacity-75"
+></i>
+
+            <select
+              class="form-select form-select-sm ps-4"
+              [value]="currentSort"
+              (change)="onSortChange($event)"
+            >
+              <option value="">Sort By</option>
+              <option value="name">Name</option>
+              <option value="department">Department</option>
+              <option value="dateOfJoining">Joining Date</option>
+            </select>
+          </div>
+
+          <!-- Favourites Link -->
+          <a
+  routerLink="/favourites"
+  class="btn btn-sm p-2 d-flex align-items-center justify-content-center"
+  data-bs-toggle="tooltip"
+  data-bs-placement="bottom"
+  title="View Favourites"
+  style="background-color: var(--bs-primary-bg-subtle); border: none;"
+>
+  <i class="bi bi-heart-fill text-danger fs-5"></i>
+</a>
+
+
+          <!-- Add Employee Button -->
+          <button
+            type="button"
+            class="btn btn-primary rounded-circle d-flex align-items-center justify-content-center"
+            data-bs-toggle="modal"
+            data-bs-target="#addEmployeeModal"
+            title="Add Employee"
+            style="width: 40px; height: 40px;"
+          >
+            <i class="bi bi-plus-lg fs-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Layout (below md) -->
+      <div class="d-md-none">
+        <!-- Search Bar -->
+        <div class="mb-3">
+          <div class="input-group input-group-sm">
+            <span class="input-group-text">
+              <i class="bi bi-search"></i>
+            </span>
+            <input 
+              type="search" 
+              class="form-control form-control-sm" 
+              placeholder="Search..." 
+              [value]="searchText"
+              (input)="onSearchChange($event)"
+            />
+          </div>
+        </div>
+
+        <!-- Sort Dropdown -->
+        <div class="mb-3">
+          <select class="form-select form-select-sm w-100" [value]="currentSort" (change)="onSortChange($event)">
+            <option value="">Sort By</option>
+            <option value="name">Name</option>
+            <option value="department">Department</option>
+            <option value="dateOfJoining">Joining Date</option>
+          </select>
+        </div>
+
+        <div class="d-flex flex-column gap-3">
+          <!-- Action Buttons -->
+          <div class="d-flex flex-column gap-2">
+            <button
+              type="button"
+              class="btn btn-success btn-sm w-100"
+              data-bs-toggle="modal"
+              data-bs-target="#addEmployeeModal"
+            >
+              ➕ Add Employee
+            </button>
+            <a 
+              routerLink="/favourites" 
+              class="btn  btn-sm w-100" 
+              *ngIf="showFavouritesLink()"
+            >
+              💖 View Favourites
+            </a>
+          </div>
+
+          <!-- Employee Count (Mobile) -->
+          <div class="text-center">
+            <span>Total Employees: {{ employeeCount }}</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Add Employee Modal Component (shared for both desktop and mobile) -->
+  <app-add-employee></app-add-employee>
+</ng-container>
